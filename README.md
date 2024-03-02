@@ -1,6 +1,5 @@
 # OOP Assignment
 
-* Follows clean architecture.
 * In online mode, parses data from hardcoded XML string.
 * In offline mode, parses data from hardcoded JSON string.
 * No API call yet.
