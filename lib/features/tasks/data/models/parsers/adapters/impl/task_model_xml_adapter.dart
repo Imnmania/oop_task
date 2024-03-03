@@ -1,5 +1,6 @@
 import 'dart:developer' show log;
 
+import 'package:oop_task/core/constants/constants.dart';
 import 'package:oop_task/features/tasks/data/models/graphics_design_model.dart';
 import 'package:oop_task/features/tasks/data/models/mathematics_model.dart';
 import 'package:oop_task/features/tasks/data/models/parsers/adapters/task_model_parser_adapter.dart';
@@ -18,16 +19,13 @@ class TaskModelXmlAdapter implements TaskModelParserAdapter {
       final rawXml = XmlDocument.parse(dataToParse);
       final xmlElements = rawXml.findAllElements('task');
       return xmlElements.map((xml) {
-        final isProgrammingModel = xml.findElements('platform').isNotEmpty;
-        final isMathematicalModel = xml.findElements('field').isNotEmpty;
-        final isGraphicsDesignModel = xml.findElements('output').isNotEmpty;
-        if (isProgrammingModel) {
+        if (xml.findElements(Constants.programmingKey).isNotEmpty) {
           return ProgrammingModel.fromXml(xml);
         }
-        if (isMathematicalModel) {
+        if (xml.findElements(Constants.mathematicsKey).isNotEmpty) {
           return MathematicsModel.fromXml(xml);
         }
-        if (isGraphicsDesignModel) {
+        if (xml.findElements(Constants.graphicsDesignKey).isNotEmpty) {
           return GraphicsDesignModel.fromXml(xml);
         }
         return TaskModel.fromXml(xml);

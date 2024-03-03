@@ -1,14 +1,13 @@
 import 'dart:convert' show jsonDecode;
 import 'dart:developer' show log;
 
-import 'package:flutter/cupertino.dart';
+import 'package:oop_task/core/constants/constants.dart';
 import 'package:oop_task/features/tasks/data/models/graphics_design_model.dart';
 import 'package:oop_task/features/tasks/data/models/mathematics_model.dart';
 import 'package:oop_task/features/tasks/data/models/parsers/adapters/task_model_parser_adapter.dart';
 import 'package:oop_task/features/tasks/data/models/programming_model.dart';
 import 'package:oop_task/features/tasks/data/models/task_model.dart';
 
-@immutable
 class TaskModelJsonAdapter implements TaskModelParserAdapter {
   const TaskModelJsonAdapter._internal();
   static const TaskModelJsonAdapter instance = TaskModelJsonAdapter._internal();
@@ -20,16 +19,13 @@ class TaskModelJsonAdapter implements TaskModelParserAdapter {
       final rawJson = jsonDecode(dataToParse) as List<dynamic>;
       return rawJson.map(
         (json) {
-          final isProgrammingModel = json.containsKey('platform');
-          final isMathematicalModel = json.containsKey('field');
-          final isGraphicsDesignModel = json.containsKey('output');
-          if (isProgrammingModel) {
+          if (json.containsKey(Constants.programmingKey)) {
             return ProgrammingModel.fromJson(json);
           }
-          if (isMathematicalModel) {
+          if (json.containsKey(Constants.mathematicsKey)) {
             return MathematicsModel.fromJson(json);
           }
-          if (isGraphicsDesignModel) {
+          if (json.containsKey(Constants.graphicsDesignKey)) {
             return GraphicsDesignModel.fromJson(json);
           }
           return TaskModel.fromJson(json);
